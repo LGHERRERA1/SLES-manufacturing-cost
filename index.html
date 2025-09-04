@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost Comparison Analysis - QUIMICOS DEL CAUCA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #94a3b8; /* Darker line */
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .timeline-item-icon-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 1.25rem; /* Corresponds to py-5 on the card */
+            transform: translateX(-50%);
+            z-index: 10;
+            background-color: white;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 0 0 6px #f0f4f8; /* Thicker border to hide the line */
+        }
+        .timeline-item-left {
+            padding-right: 3.5rem; /* More space */
+            justify-self: end;
+        }
+        .timeline-item-right {
+            padding-left: 3.5rem; /* More space */
+            justify-self: start;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            border-width: 2px;
+        }
+        .card:hover {
+            transform: translateY(-15px) scale(1.10); /* Even more pronounced effect */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Deeper shadow */
+            z-index: 20;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+                transform: translateX(0);
+            }
+            .timeline-item-icon-wrapper {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+            .timeline-item-left, .timeline-item-right {
+                grid-column: 1 / -1; /* Full width */
+                justify-self: stretch;
+                padding-left: 3.5rem; /* Space from the line on the left */
+                padding-right: 1rem;
+            }
+             .timeline-item-left {
+                margin-bottom: 1rem;
+            }
+        }
+        .title-wrapper {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+        .title-text {
+            background-color: #f0f4f8;
+            display: inline-block;
+            padding: 0 1rem;
+            color: #004030;
+        }
+
+        /* Custom Colors */
+        .colombia-main-header { color: #113F67; }
+        .card.colombia {
+            background-color: #91ADC8;
+            border-color: #7A98B7;
+        }
+        .card.colombia:hover {
+            background-color: #7A98B7;
+            border-color: #5F8ABF;
+        }
+        .card.colombia .card-title, .card.colombia p, .card.colombia strong {
+            color: #113F67;
+        }
+        
+        .mexico-main-header { color: #004030; }
+        .card.mexico {
+            background-color: #CADCAE;
+            border-color: #B9C99D;
+        }
+        .card.mexico:hover {
+            background-color: #B9C99D;
+            border-color: #A8B88C;
+        }
+        .card.mexico .card-title,
+        .card.mexico p,
+        .card.mexico strong {
+             color: #004030;
+        }
+        
+        footer {
+            color: #004030;
+        }
+        .footer-strong-co {
+            color: #113F67;
+            font-weight: 700;
+        }
+        .footer-strong-mx {
+            color: #004030;
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <header class="p-8 bg-gray-800 text-white text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">QUIMICOS DEL CAUCA</h1>
+            <p class="text-xl md:text-2xl mt-2">Exclusive SLES Production Cost Analysis for Unilever</p>
+            <p class="mt-4 text-gray-300">Understanding the price differences for Unilever-exclusive products between our plants in Colombia and Mexico.</p>
+        </header>
+
+        <main class="p-6 md:p-10 relative">
+            <div class="timeline-line hidden md:block"></div>
+            
+            <!-- Country Headers with Flags -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-10 px-4 md:px-10 pb-8">
+                <div class="flex justify-center md:justify-end items-center md:pr-14">
+                    <h3 class="text-4xl font-bold colombia-main-header mr-4">COLOMBIA</h3>
+                    <span class="text-6xl">🇨🇴</span>
+                </div>
+                <div class="flex justify-center md:justify-start items-center md:pl-14">
+                    <span class="text-6xl">🇲🇽</span>
+                    <h3 class="text-4xl font-bold mexico-main-header ml-4">MEXICO</h3>
+                </div>
+            </div>
+
+            <!-- 1. Products for Unilever -->
+            <div class="title-wrapper mb-4"><h2 class="title-text text-2xl font-bold">1. Products for Unilever</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start mb-12">
+                <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">A standard product (SLES 2 Moles) and one Unilever-exclusive product (SLES 1 Mol) require only <strong>2 dedicated tanks</strong>.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">Producing 3 different Unilever-exclusive products requires <strong>6 dedicated tanks</strong>, increasing infrastructure costs.</p></div>
+            </div>
+
+            <!-- 2. Product Changeover Costs -->
+            <div class="title-wrapper mb-4 mt-16 md:mt-4"><h2 class="title-text text-2xl font-bold">2. Product Changeover Costs</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start mb-12">
+                <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h18M16.5 3L21 7.5m0 0L16.5 12M21 7.5H3" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">Focus on one main Unilever-exclusive product <strong>minimizes costly line changes</strong>, boosting efficiency.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">Each changeover between 3 exclusive products <strong>generates specific operational costs</strong>.</p></div>
+            </div>
+
+            <!-- 3. Raw Material: Sulfur Cost -->
+            <div class="title-wrapper mb-4 mt-16 md:mt-4"><h2 class="title-text text-2xl font-bold">3. Raw Material: Sulfur Cost</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start mb-12">
+                <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.131.332 5.988 5.988 0 01-2.131-.332c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.131.332 5.989 5.989 0 01-2.131-.332c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">As Sulfuric Acid manufacturers, we buy sulfur in bulk. The cost is <strong>less than half</strong> of the price in Mexico.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">We buy smaller quantities from local distributors at a price <strong>more than double</strong> that of Colombia.</p></div>
+            </div>
+
+            <!-- 4. Production Capacity & Unit Costs -->
+            <div class="title-wrapper mb-4 mt-16 md:mt-4"><h2 class="title-text text-2xl font-bold">4. Production Capacity & Unit Costs</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start mb-12">
+                 <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">A <strong>40,000 ton/year</strong> output with 3 reactors creates economies of scale, significantly lowering unit costs.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">An <strong>18,000 ton/year</strong> output, even at full capacity, results in inherently higher fixed costs per unit.</p></div>
+            </div>
+
+            <!-- 5. Labor Costs -->
+            <div class="title-wrapper mb-4 mt-16 md:mt-4"><h2 class="title-text text-2xl font-bold">5. Labor Costs</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start mb-12">
+                 <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-4.663M12 12a4.5 4.5 0 014.5 4.5v.228a6.375 6.375 0 01-11.964-.228v-.228a4.5 4.5 0 014.5-4.5z" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">Lower cost of living, combined with national <strong>salary standards and tax policies</strong>, results in highly competitive labor costs.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">High cost of living, coupled with different <strong>wage regulations and payroll taxes</strong>, leads to much higher costs (up to a 2 to 1 difference).</p></div>
+            </div>
+
+            <!-- 6. Technology & Specialization -->
+            <div class="title-wrapper mb-4 mt-16 md:mt-4"><h2 class="title-text text-2xl font-bold">6. Technology & Specialization</h2></div>
+            <div class="relative grid md:grid-cols-2 gap-x-10 items-start">
+                 <div class="timeline-item-icon-wrapper"><div class="bg-gray-700 p-3 rounded-full text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 14.5M15 3.104c.251.023.501.05.75.082M19.8 14.5L14.25 18l-2.47-2.47a.75.75 0 00-1.06 0L5 14.5M19.8 14.5l-4.242 4.242a.75.75 0 01-1.06 0l-4.242-4.242" /></svg></div></div>
+                <div class="timeline-item-left card group colombia rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇨🇴</span> Colombia (Cali)</h4><p class="mt-2">The plant uses legacy technology <strong>not designed for low 1-4 Dioxane SLES</strong>, avoiding costs from extra processes.</p></div>
+                <div class="timeline-item-right card group mexico rounded-lg p-5 w-full max-w-md"><h4 class="font-bold text-xl card-title flex items-center"><span class="text-3xl mr-2">🇲🇽</span> Mexico (CDMX)</h4><p class="mt-2">Designed to produce <strong>extra-low 1-4 Dioxane</strong> products, which incurs higher costs for analysis, steam, and water treatment.</p></div>
+            </div>
+        </main>
+        
+        <footer class="p-8 mt-6 bg-gray-200 border-t-4 border-cyan-500">
+            <h3 class="text-2xl font-bold text-center">Conclusion & Transparency</h3>
+            <p class="mt-4 text-center max-w-4xl mx-auto">
+                The price differences for Unilever-exclusive surfactants are driven by structural factors at each plant. In <strong class="footer-strong-co">Colombia</strong>, we optimize for volume and cost efficiency. In <strong class="footer-strong-mx">Mexico</strong>, we specialize in higher technology products, leading to an inherently different cost structure.
+                <br><br>
+                Our commitment is to provide full transparency and the best possible value in each market.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
